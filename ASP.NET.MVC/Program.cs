@@ -1,3 +1,6 @@
+using ASP.NET.MVC.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ASP.NET.MVC
 {
     public class Program
@@ -5,9 +8,11 @@ namespace ASP.NET.MVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connStr = builder.Configuration.GetConnectionString("LocalDb");
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ShopDbContext>(opts => opts.UseSqlServer(connStr));
 
             var app = builder.Build();
 

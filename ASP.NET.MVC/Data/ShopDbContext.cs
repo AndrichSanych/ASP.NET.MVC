@@ -7,6 +7,9 @@ namespace ASP.NET.MVC.Data
     {
         public DbSet<Product> Products { get; set; }
 
+        public ShopDbContext(DbContextOptions options) : base(options) {}
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -22,12 +25,12 @@ namespace ASP.NET.MVC.Data
             });
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    base.OnConfiguring(optionsBuilder);
 
-            var str = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ShopMvcPV221;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-            optionsBuilder.UseSqlServer(str);
-        }
+        //    var str = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ShopMvcPV221;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        //    optionsBuilder.UseSqlServer(str);
+        //}
     }
 }
