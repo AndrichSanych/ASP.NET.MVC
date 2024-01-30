@@ -6,11 +6,11 @@ namespace ASP.NET.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private List<User> users = new();
+        public HomeController()
         {
-            _logger = logger;
+           users.Add(new User() { Id = 23, Login = "Blabla"});
+           users.Add(new User() { Id = 25, Login = "BlablaMax"});
         }
 
         public IActionResult Index()
@@ -24,7 +24,7 @@ namespace ASP.NET.MVC.Controllers
         }
         public IActionResult Users()
         {
-            return View();
+            return View(users);
         }
 
 
