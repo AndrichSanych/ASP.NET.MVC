@@ -11,12 +11,13 @@
             <th scope="col">Category</th>
             <th scope="col">Discount</th>
             <th scope="col">Status</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var i in Model)
         {
-            <tr>
+            <tr class="align-middle">
                 <th scope="row">@i.Id</th>
                 <td>@i.Name
                     @if(i.Discount>0)
@@ -36,6 +37,12 @@
                     {
                         <span class="badge bg-secondary">Out of Stock</span>
                     }
+                </td>
+                <td>
+                    <div class="btn-group">
+                    <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@i.Id">Details</a>
+                    <a type="button" class="btn btn-danger" asp-action="Details" asp-route-id="@i.Id">Delete</a>
+                    </div> 
                 </td>
             </tr> 
         }   

@@ -17,5 +17,9 @@ namespace ASP.NET.MVC.Controllers
 
             return View(products);
         }
+        public IActionResult Details(int id)
+        {
+            return View(id);
+        }
     }
 }
