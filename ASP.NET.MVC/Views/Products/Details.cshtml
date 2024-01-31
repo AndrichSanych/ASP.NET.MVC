@@ -1,6 +1,6 @@
 ﻿@model Product;
 <div>
-    <a asp-action="Index" class="btn btn-dark my-3">Back</a>
+    <a asp-action="Index" class="btn btn-dark my-3"><i class="bi bi-backspace-fill"></i></a>
 </div>
 <div class="card text-center">
     <h5 class="card-header">Product Information</h5>
@@ -11,7 +11,7 @@
         }
         <h5 class="card-title fs-1">@Model.Name</h5>
         <p class="card-text fs-4">@Model.Price - @Model.Category</p>
-        <a href="#" class="btn btn-success my-3">Buy</a>
+        <a href="#" class="btn btn-success my-3"><i class="bi bi-bag-fill"></i></a>
         <div>
             <img src="@Model.ImageUrl" alt="Image Product" />
         </div>
