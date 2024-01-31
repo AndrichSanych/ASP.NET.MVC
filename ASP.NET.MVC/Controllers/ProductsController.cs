@@ -19,7 +19,31 @@ namespace ASP.NET.MVC.Controllers
         }
         public IActionResult Details(int id)
         {
-            return View(id);
+            var product = context.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(product);
+            }
+        }
+        public IActionResult Delete(int id)
+        {
+            var product = context.Products.Find(id);
+            if(product == null) 
+            {
+                return NotFound();
+            }
+            else 
+            {
+                context.Products.Remove(product);
+                context.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+                
+            }
         }
     }
 }
