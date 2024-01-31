@@ -1,4 +1,5 @@
 ﻿using ASP.NET.MVC.Data;
+using ASP.NET.MVC.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASP.NET.MVC.Controllers
@@ -16,6 +17,19 @@ namespace ASP.NET.MVC.Controllers
             var products = context.Products.ToList();
 
             return View(products);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Product model)
+        {
+            context.Products.Add(model); 
+            context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Details(int id)
         {
