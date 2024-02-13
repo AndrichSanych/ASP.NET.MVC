@@ -23,9 +23,14 @@ namespace ASP.NET.MVC.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Create(Product model)
         {
+            if(!ModelState.IsValid) 
+            {
+                return View();
+            }
             context.Products.Add(model); 
             context.SaveChanges();
 
