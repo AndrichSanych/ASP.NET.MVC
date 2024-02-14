@@ -9,7 +9,7 @@
             <a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path">@Model.Name</a>
             <p class="card-text">
                 @Model.Price$
-                @if (Model.Discount > 0)
+                @if (Model.Discount > 0)    
                 {
                     <span class="badge bg-danger">SALE</span>
                 }

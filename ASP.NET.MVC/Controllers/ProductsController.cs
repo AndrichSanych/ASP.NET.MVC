@@ -47,6 +47,29 @@ namespace ASP.NET.MVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var product = context.Products.Find(id);
+            if (product == null) return NotFound();
+            LoadCategories();
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Product model)
+        {
+            if (!ModelState.IsValid)
+            {
+                LoadCategories();
+                return View();
+            }
+            context.Products.Update(model);
+            context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult Details(int id, string? returnUrl)
         {
             var product = context.Products.Find(id);
