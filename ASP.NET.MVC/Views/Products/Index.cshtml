@@ -30,7 +30,7 @@
                     }
                 </td>
                 <td>@i.Price$</td>
-                <td>@i.Category</td>
+                <td>@i.Category?.Name</td>
                 <td>@i.Discount%</td>
                 <td>
                     @if(i.InStock)
@@ -44,7 +44,7 @@
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@i.Id"><i class="bi bi-info-circle"></i></a>
+                        <a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@i.Id" asp-route-returnUrl="@Context.Request.Path"><i class="bi bi-info-circle"></i></a>
                         <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@i.Id"><i class="bi bi-trash3"></i></a>
                     </div> 
                 </td>

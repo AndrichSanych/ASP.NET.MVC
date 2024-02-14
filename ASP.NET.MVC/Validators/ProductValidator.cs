@@ -13,12 +13,9 @@ namespace ASP.NET.MVC.Validators
                 .MinimumLength(2)
                 .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
 
-            this.RuleFor(x => x.Category)
-                .NotNull()
-                .NotEmpty()
-                .MinimumLength(2)
-                .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
-
+            this.RuleFor(x => x.CategoryId)
+                .NotEmpty();
+                
             this.RuleFor(x => x.Price)
                .NotEmpty()
                .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} can not be negative.");

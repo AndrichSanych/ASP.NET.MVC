@@ -1,5 +1,7 @@
-﻿using ASP.NET.MVC.Models;
+﻿using ASP.NET.MVC.Data;
+using ASP.NET.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ASP.NET.MVC.Controllers
@@ -7,15 +9,19 @@ namespace ASP.NET.MVC.Controllers
     public class HomeController : Controller
     {
         private List<User> users = new();
-        public HomeController()
+        private readonly ShopDbContext context;
+
+        public HomeController(ShopDbContext context)
         {
            users.Add(new User() { Id = 23, Login = "Blabla"});
            users.Add(new User() { Id = 25, Login = "BlablaMax"});
+           this.context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var products = context.Products.Include(x => x.Category).ToList();
+            return View(products);
         }
 
         public IActionResult Privacy()
