@@ -1,4 +1,6 @@
-using ASP.NET.MVC.Data;
+using AutoMapper;
+using BusinessLogic;
+using DataAccess.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +18,10 @@ namespace ASP.NET.MVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ShopDbContext>(opts => opts.UseSqlServer(connStr));
 
-            builder.Services.AddFluentValidationAutoValidation();
-            builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAutoMapper();
+            builder.Services.AddFluentValidators();
+
+            
 
             var app = builder.Build();
 

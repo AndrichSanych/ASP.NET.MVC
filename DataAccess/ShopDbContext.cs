@@ -1,8 +1,8 @@
-﻿using ASP.NET.MVC.Data.Entities;
+﻿using DataAccess.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
-namespace ASP.NET.MVC.Data
+namespace DataAccess.Data
 {
     public class ShopDbContext: DbContext
     {

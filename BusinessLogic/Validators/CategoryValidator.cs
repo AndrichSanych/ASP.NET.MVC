@@ -1,9 +1,11 @@
-﻿using FluentValidation;
-using ASP.NET.MVC.Data.Entities;
-namespace ASP.NET.MVC.Validators
+﻿using BusinessLogic.DTOs;
+using DataAccess.Data.Entities;
+using FluentValidation;
+
+namespace BusinessLogic.Validators
 
 {
-    public class CategoryValidator : AbstractValidator<Category>
+    public class CategoryValidator : AbstractValidator<CategoryDto>
     {
         public CategoryValidator()
         {

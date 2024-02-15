@@ -1,5 +1,7 @@
-﻿using ASP.NET.MVC.Data;
-using ASP.NET.MVC.Data.Entities;
+﻿using AutoMapper;
+using BusinessLogic.DTOs;
+using DataAccess.Data;
+using DataAccess.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,21 +11,24 @@ namespace ASP.NET.MVC.Controllers
     public class ProductsController : Controller
     {
         private readonly ShopDbContext context;
+        private readonly IMapper mapper;
 
-        public ProductsController(ShopDbContext context)
+        public ProductsController(ShopDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        public void LoadCategories()
+        private void LoadCategories()
         {
             //1: TempData[key] = value;
             //2: ViewBag.Key = value;
-            ViewBag.Categories = new SelectList(context.Categories.ToList(), nameof(Category.Id), nameof(Category.Name));
+            var categories = mapper.Map<List<CategoryDto>>(context.Categories.ToList());
+            ViewBag.Categories = new SelectList(categories, nameof(Category.Id), nameof(Category.Name));
         }
         public IActionResult Index()
         {
-            var products = context.Products.Include(x => x.Category).ToList();
+            var products = mapper.Map<List<ProductDto>>(context.Products.Include(x => x.Category).ToList());
 
             return View(products);
         }
@@ -35,14 +40,14 @@ namespace ASP.NET.MVC.Controllers
         }
 
         [HttpPost] 
-        public IActionResult Create(Product model)
+        public IActionResult Create(ProductDto model)
         {
             if(!ModelState.IsValid) 
             {
                 LoadCategories();
                 return View();
             }
-            context.Products.Add(model); 
+            context.Products.Add(mapper.Map<Product>(model)); 
             context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
@@ -54,18 +59,18 @@ namespace ASP.NET.MVC.Controllers
             var product = context.Products.Find(id);
             if (product == null) return NotFound();
             LoadCategories();
-            return View(product);
+            return View(mapper.Map<ProductDto>(product));
         }
 
         [HttpPost]
-        public IActionResult Edit(Product model)
+        public IActionResult Edit(ProductDto model)
         {
             if (!ModelState.IsValid)
             {
                 LoadCategories();
                 return View();
             }
-            context.Products.Update(model);
+            context.Products.Update(mapper.Map<Product>(model));
             context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
@@ -76,9 +81,24 @@ namespace ASP.NET.MVC.Controllers
             if (product == null) return NotFound();   
             
             context.Entry(product).Reference(x=>x.Category).Load();
-            
+            //1
+            //var dto = new ProductDto()
+            //{
+            //    Id = product.Id,
+            //    CategoryId = product.CategoryId,
+            //    Description = product.Description,
+            //    Discount = product.Discount,
+            //    ImageUrl = product.ImageUrl,
+            //    InStock = product.InStock,
+            //    Name = product.Name,
+            //    Price = product.Price,
+            //    CategoryName = product.Category.Name
+            //};
+            //2
+            var dto = mapper.Map<ProductDto>(product);
+
             ViewBag.ReturnUrl = returnUrl;
-            return View(product);
+            return View(dto);
             
         }
         public IActionResult Delete(int id)

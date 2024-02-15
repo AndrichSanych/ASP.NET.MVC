@@ -1,4 +1,4 @@
-﻿@model Product;
+﻿@model ProductDto;
 <div>
     
 </div>
@@ -15,7 +15,7 @@
             </div>
         }
         <h5 class="card-title fs-1">@Model.Name</h5>
-        <p class="card-text fs-4">@Model.Price - @Model.Category?.Name</p>
+        <p class="card-text fs-4">@Model.Price - @Model.CategoryName</p>
         <a href="#" class="btn btn-success my-3"><i class="bi bi-bag-fill">
             <br />
             BUY</i></a>

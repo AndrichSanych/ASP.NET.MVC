@@ -1,41 +1,43 @@
 ﻿using FluentValidation;
-using ASP.NET.MVC.Data.Entities;
-namespace ASP.NET.MVC.Validators
+using DataAccess.Data.Entities;
+using BusinessLogic.DTOs;
+
+namespace BusinessLogic.Validators
 
 {
-    public class ProductValidator : AbstractValidator<Product>
+    public class ProductValidator : AbstractValidator<ProductDto>
     {
-        public ProductValidator() 
+        public ProductValidator()
         {
-            this.RuleFor(x => x.Name)
+            RuleFor(x => x.Name)
                 .NotNull()
                 .NotEmpty()
                 .MinimumLength(2)
                 .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
 
-            this.RuleFor(x => x.CategoryId)
+            RuleFor(x => x.CategoryId)
                 .NotEmpty();
-                
-            this.RuleFor(x => x.Price)
+
+            RuleFor(x => x.Price)
                .NotEmpty()
                .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} can not be negative.");
 
-            this.RuleFor(x => x.Discount)
+            RuleFor(x => x.Discount)
                .NotEmpty()
                .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} can not be negative.");
 
-            this.RuleFor(x => x.Description)
-               .Length(10,4000)
+            RuleFor(x => x.Description)
+               .Length(10, 4000)
                .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
 
-            this.RuleFor(x => x.ImageUrl)
+            RuleFor(x => x.ImageUrl)
                .NotEmpty()
                .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
         }
 
         private static bool LinkMustBeUri(string link)
         {
-            if(string.IsNullOrWhiteSpace(link))
+            if (string.IsNullOrWhiteSpace(link))
             {
                 return false;
             }
