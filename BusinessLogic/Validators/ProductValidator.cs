@@ -31,8 +31,8 @@ namespace BusinessLogic.Validators
                .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
 
             RuleFor(x => x.ImageUrl)
-               .NotEmpty()
-               .Matches("[A-Z].*").WithMessage("{PropetryName} must start with uppercase letter.");
+               .NotEmpty();
+               
         }
 
         private static bool LinkMustBeUri(string link)
