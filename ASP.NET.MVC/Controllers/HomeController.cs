@@ -1,4 +1,5 @@
 ﻿using ASP.NET.MVC.Models;
+using BusinessLogic.Interfaces;
 using DataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,19 +10,19 @@ namespace ASP.NET.MVC.Controllers
     public class HomeController : Controller
     {
         private List<User> users = new();
-        private readonly ShopDbContext context;
+        private readonly IProductsService productsService;
 
-        public HomeController(ShopDbContext context)
+        public HomeController(IProductsService productsService)
         {
            users.Add(new User() { Id = 23, Login = "Blabla"});
            users.Add(new User() { Id = 25, Login = "BlablaMax"});
-           this.context = context;
+            this.productsService = productsService;
+
         }
 
         public IActionResult Index()
         {
-            var products = context.Products.Include(x => x.Category).ToList();
-            return View(products);
+            return View(productsService.GetAll());
         }
 
         public IActionResult Privacy()

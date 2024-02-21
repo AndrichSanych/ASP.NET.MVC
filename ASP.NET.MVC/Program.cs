@@ -1,7 +1,10 @@
 using AutoMapper;
 using BusinessLogic;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using DataAccess.Data;
 using FluentValidation;
+using DataAccess;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,16 +15,16 @@ namespace ASP.NET.MVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connStr = builder.Configuration.GetConnectionString("LocalDb");
+            var connStr = builder.Configuration.GetConnectionString("LocalDb")!;
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ShopDbContext>(opts => opts.UseSqlServer(connStr));
+            builder.Services.AddDbContext(connStr);
 
             builder.Services.AddAutoMapper();
             builder.Services.AddFluentValidators();
 
-            
+            builder.Services.AddCustomServices();
 
             var app = builder.Build();
 

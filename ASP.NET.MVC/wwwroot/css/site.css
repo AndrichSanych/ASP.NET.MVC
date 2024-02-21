@@ -1,44 +1,47 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
-.details-card .card-header{ 
-    display:grid;
-    grid-template-columns:40px 1fr 40px;
+.details-card .card-header {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
     align-items: center;
 }
-.details-card .image-block{
+
+.details-card .image-block {
     margin: 16px;
 }
+
 .details-card img {
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
     object-fit: contain;
     border-radius: 10px;
 }
+
 .home-card img {
     height: 200px;
     object-fit: contain;
-    padding: 8px; 
+    padding: 8px;
     border-radius: 10px;
 }
 
@@ -46,8 +49,16 @@ body {
     color: black;
     text-decoration: none;
 }
-.home-card a:hover {
-    color: darkgray;
-    text-decoration: underline;
+
+    .home-card a:hover {
+        color: darkgray;
+        text-decoration: underline;
+    }
+
+.zoom {
+    transition: .2s;
 }
 
+    .zoom:hover {
+        transform: scale(2.5);
+    }

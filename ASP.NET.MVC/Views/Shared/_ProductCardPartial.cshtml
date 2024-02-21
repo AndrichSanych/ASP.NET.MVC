@@ -1,11 +1,11 @@
-﻿@model Product;
+﻿@model ProductDto;
 
 <div class="card h-100 home-card">
     <a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path">
         <img src="@Model.ImageUrl" class="card-img-top" alt="Product Image">
     </a>
     <div class="card-body">
-        <h5 class="card-title">
+        <h5 class="card-title"/>
             <a asp-controller="Products" asp-action="Details" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path">@Model.Name</a>
             <p class="card-text">
                 @Model.Price$
@@ -14,7 +14,7 @@
                     <span class="badge bg-danger">SALE</span>
                 }
                 <br />
-                @Model.Category?.Name
+                @(Model.CategoryName ?? "Category not loaded")
             </p>
             <div>
                 <a type="button" class="btn btn-info">
