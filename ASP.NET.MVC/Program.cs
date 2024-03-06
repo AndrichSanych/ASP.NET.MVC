@@ -13,7 +13,7 @@ namespace ASP.NET.MVC
     public class Program
     {
         public static void Main(string[] args)
-        {
+        {   
             var builder = WebApplication.CreateBuilder(args);
             var connStr = builder.Configuration.GetConnectionString("LocalDb")!;
 
@@ -25,6 +25,15 @@ namespace ASP.NET.MVC
             builder.Services.AddFluentValidators();
 
             builder.Services.AddCustomServices();
+
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -42,6 +51,8 @@ namespace ASP.NET.MVC
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

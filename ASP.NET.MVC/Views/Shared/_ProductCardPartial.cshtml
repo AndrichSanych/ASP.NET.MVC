@@ -17,11 +17,11 @@
                 @(Model.CategoryName ?? "Category not loaded")
             </p>
             <div>
-                <a type="button" class="btn btn-info">
+                <a asp-controller="Basket" asp-action="Add" asp-route-id="@Model.Id"  class="btn btn-info">
                     <i class="bi bi-cart3">
                         <br />
-                        Add
-                    </i>
+                    Add to basket
+                </i>
                 </a>
             </div>
     </div>

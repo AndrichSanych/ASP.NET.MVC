@@ -16,6 +16,12 @@
         }
         <h5 class="card-title fs-1">@Model.Name</h5>
         <p class="card-text fs-4">@Model.Price - @Model.CategoryName</p>
+        <a asp-controller="Basket" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">
+            <i class="bi bi-cart3">
+                <br />
+                Add to basket
+            </i>
+        </a>
         <a href="#" class="btn btn-success my-3"><i class="bi bi-bag-fill">
             <br />
             BUY</i></a>
