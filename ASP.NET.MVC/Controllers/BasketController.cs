@@ -7,34 +7,27 @@ using System.Text.Json.Serialization;
 namespace ASP.NET.MVC.Controllers
 {
     public class BasketController : Controller
-    {
-        const string key = "basket_items_key";
-        private readonly IProductsService productsService;
+    {        
+        private readonly IBasketService basketService;
 
-        public BasketController(IProductsService productsService)
-        {
-            this.productsService = productsService;
+        public BasketController(IBasketService basketService)
+        {          
+            this.basketService = basketService;
         }
 
         public IActionResult Index()
-        {
-            var ids = HttpContext.Session.Get<List<int>>(key) ?? new();
-            return View(productsService.Get(ids));
+        {           
+            return View(basketService.GetProducts());
         }
 
         public IActionResult Add(int id)
         {
-
-            var ids = HttpContext.Session.Get<List<int>>(key) ?? new();
-  
-            ids.Add(id);
-
-            HttpContext.Session.SetString(key, JsonSerializer.Serialize(ids));
-
+            basketService.AddProduct(id);
             return RedirectToAction(nameof(Index));
         } 
         public IActionResult Remove(int id)
         {
+            basketService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
     }

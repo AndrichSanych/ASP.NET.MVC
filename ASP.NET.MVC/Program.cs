@@ -7,6 +7,7 @@ using FluentValidation;
 using DataAccess;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using ASP.NET.MVC.Services;
 
 namespace ASP.NET.MVC
 {
@@ -25,6 +26,7 @@ namespace ASP.NET.MVC
             builder.Services.AddFluentValidators();
 
             builder.Services.AddCustomServices();
+            builder.Services.AddScoped<IBasketService, BasketService>();
 
             builder.Services.AddDistributedMemoryCache();
 

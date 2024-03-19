@@ -8,5 +8,6 @@ namespace BusinessLogic.Interfaces
 
         void AddProduct(int id);
         void Remove(int id);
+        int GetCount();
     }
 }
