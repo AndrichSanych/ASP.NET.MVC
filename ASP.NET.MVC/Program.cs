@@ -8,6 +8,7 @@ using DataAccess;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using ASP.NET.MVC.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP.NET.MVC
 {
@@ -21,6 +22,8 @@ namespace ASP.NET.MVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext(connStr);
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ShopDbContext>();
 
             builder.Services.AddAutoMapper();
             builder.Services.AddFluentValidators();
@@ -55,6 +58,8 @@ namespace ASP.NET.MVC
             app.UseAuthorization();
 
             app.UseSession();
+
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

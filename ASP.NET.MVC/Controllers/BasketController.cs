@@ -1,6 +1,7 @@
 ﻿using ASP.NET.MVC.Helpers;
 using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -15,20 +16,21 @@ namespace ASP.NET.MVC.Controllers
             this.basketService = basketService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string returnUrl)
         {           
+            ViewBag.ReturnUrl = returnUrl;
             return View(basketService.GetProducts());
         }
 
-        public IActionResult Add(int id)
+        public IActionResult Add(int id, string returnUrl)
         {
             basketService.AddProduct(id);
-            return RedirectToAction(nameof(Index));
+            return Redirect(returnUrl);
         } 
-        public IActionResult Remove(int id)
+        public IActionResult Remove(int id, string returnUrl)
         {
             basketService.Remove(id);
-            return RedirectToAction(nameof(Index));
+            return Redirect(returnUrl);
         }
     }
 }

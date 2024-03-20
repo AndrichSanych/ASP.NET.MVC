@@ -1,4 +1,6 @@
-﻿@model ProductDto;
+﻿@using BusinessLogic.Interfaces;
+@model ProductDto;
+@inject IBasketService basketService;
 <div>
     
 </div>
@@ -16,12 +18,26 @@
         }
         <h5 class="card-title fs-1">@Model.Name</h5>
         <p class="card-text fs-4">@Model.Price - @Model.CategoryName</p>
-        <a asp-controller="Basket" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">
-            <i class="bi bi-cart3">
-                <br />
-                Add to basket
-            </i>
-        </a>
+        <div>
+            @if(basketService.isExist(Model.Id))
+            {
+                <a asp-controller="Basket" asp-action="Remove" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-secondary">
+                <i class="bi bi-cart3">
+                    <br />
+                    Remove from basket
+                </i>
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Basket" asp-action="Add" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-primary">
+                    <i class="bi bi-cart3">
+                        <br />
+                        Add to basket
+                    </i>
+                </a>
+            }
+        </div>
         <a href="#" class="btn btn-success my-3"><i class="bi bi-bag-fill">
             <br />
             BUY</i></a>

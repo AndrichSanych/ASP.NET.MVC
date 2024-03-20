@@ -1,10 +1,11 @@
 ﻿using DataAccess.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
 namespace DataAccess.Data
 {
-    public class ShopDbContext: DbContext
+    public class ShopDbContext: IdentityDbContext
     {
         public DbSet<Product> Products { get; set; }
         

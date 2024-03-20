@@ -3,6 +3,7 @@ using BusinessLogic.DTOs;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
 
@@ -20,9 +21,17 @@ namespace ASP.NET.MVC.Services
             httpContext = contextAccessor.HttpContext ?? throw new Exception();
         }
 
-        private List<int> GetBasketItems() => httpContext.Session.Get<List<int>>(key) ?? new();
+        private List<int> GetBasketItems()
+        {
+            //var value = httpContext.Session.GetString(key);
+            //return value == null ? new() : JsonSerializer.Deserialize<List<int>>(value)?? new();
+            return httpContext.Session.Get<List<int>>(key) ?? new();
+        }
 
-        private void SaveBasketItems(List<int> items) => httpContext.Session.SetString(key, JsonSerializer.Serialize(items));
+        private void SaveBasketItems(List<int> items)
+        {
+            httpContext.Session.SetString(key, JsonSerializer.Serialize(items));            
+        }
 
         void IBasketService.AddProduct(int id)
         {
@@ -51,6 +60,11 @@ namespace ASP.NET.MVC.Services
         public int GetCount()
         {
            return GetBasketItems().Count;
+        }
+
+        public bool isExist(int id)
+        {
+            return GetBasketItems().Contains(id);
         }
     }
 }
