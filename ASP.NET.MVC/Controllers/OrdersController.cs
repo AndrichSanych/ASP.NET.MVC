@@ -1,9 +1,11 @@
 ﻿using BusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ASP.NET.MVC.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IOrdersService ordersService;
