@@ -17,8 +17,12 @@
             }
         </ul>
         <br />
-
-        <a href="#" class="btn btn-success" margin 2px>Submit</a>
+        <div>
+            <a asp-controller="Orders" asp-action="Create" class="btn btn-success" margin 2px>Submit</a>
+        </div>
+        <div>
+            <a asp-controller="Home" class="btn btn-primary" margin 2px>Continue Shopping</a>
+        </div>
     </div>
     <div class="card-footer text-body-secondary">
         Items: @Model.Count

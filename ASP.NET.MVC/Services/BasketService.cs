@@ -23,14 +23,12 @@ namespace ASP.NET.MVC.Services
 
         private List<int> GetBasketItems()
         {
-            //var value = httpContext.Session.GetString(key);
-            //return value == null ? new() : JsonSerializer.Deserialize<List<int>>(value)?? new();
             return httpContext.Session.Get<List<int>>(key) ?? new();
         }
 
         private void SaveBasketItems(List<int> items)
         {
-            httpContext.Session.SetString(key, JsonSerializer.Serialize(items));            
+            httpContext.Session.SetString(key, JsonSerializer.Serialize(items));
         }
 
         void IBasketService.AddProduct(int id)
@@ -65,6 +63,11 @@ namespace ASP.NET.MVC.Services
         public bool isExist(int id)
         {
             return GetBasketItems().Contains(id);
+        }
+       
+        public IEnumerable<int> GetProductsIds()
+        {
+            return GetBasketItems();
         }
     }
 }

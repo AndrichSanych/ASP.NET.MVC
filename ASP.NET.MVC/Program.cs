@@ -9,6 +9,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using ASP.NET.MVC.Services;
 using Microsoft.AspNetCore.Identity;
+using DataAccess.Data.Entities;
 
 namespace ASP.NET.MVC
 {
@@ -23,7 +24,7 @@ namespace ASP.NET.MVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext(connStr);
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ShopDbContext>();
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ShopDbContext>();
 
             builder.Services.AddAutoMapper();
             builder.Services.AddFluentValidators();

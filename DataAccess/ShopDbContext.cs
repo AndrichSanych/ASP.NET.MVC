@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
-namespace DataAccess.Data
+namespace DataAccess.Data  
 {
-    public class ShopDbContext: IdentityDbContext
+    public class ShopDbContext: IdentityDbContext<User>
     {
         public DbSet<Product> Products { get; set; }
         
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
 
         public ShopDbContext(DbContextOptions options) : base(options) {}
 
@@ -48,12 +50,5 @@ namespace DataAccess.Data
             });
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-
-        //    var str = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ShopMvcPV221;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-        //    optionsBuilder.UseSqlServer(str);
-        //}
     }
 }

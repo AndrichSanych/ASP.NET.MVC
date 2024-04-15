@@ -1,0 +1,17 @@
+﻿@model IEnumerable<OrderDto>;
+
+<h1>My Order History</h1>
+@if (Model.Any())
+{
+    foreach (var i in Model)
+    {
+        <ul>
+            <li>#@i.Id - @i.TotalPrice - @i.Date - @i.Products.Count() </li>
+        </ul>
+    }
+}
+else
+{
+    <p> You have not any orders yet!</p>
+    <a asp-controller="Home" class="btn btn-primary" margin 2px>Start Shopping</a>
+}

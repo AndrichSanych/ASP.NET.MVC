@@ -9,13 +9,13 @@ namespace ASP.NET.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private List<User> users = new();
+        private List<UserTest> users = new();
         private readonly IProductsService productsService;
 
         public HomeController(IProductsService productsService)
         {
-           users.Add(new User() { Id = 23, Login = "Blabla"});
-           users.Add(new User() { Id = 25, Login = "BlablaMax"});
+           users.Add(new UserTest() { Id = 23, Login = "Blabla"});
+           users.Add(new UserTest() { Id = 25, Login = "BlablaMax"});
             this.productsService = productsService;
 
         }
