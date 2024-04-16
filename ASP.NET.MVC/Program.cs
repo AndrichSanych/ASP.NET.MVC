@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using ASP.NET.MVC.Services;
 using Microsoft.AspNetCore.Identity;
 using DataAccess.Data.Entities;
+using ASP.NET.MVC.Helpers;
 
 namespace ASP.NET.MVC
 {
@@ -24,7 +25,13 @@ namespace ASP.NET.MVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext(connStr);
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ShopDbContext>();
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+            })
+                .AddDefaultTokenProviders()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<ShopDbContext>();
 
             builder.Services.AddAutoMapper();
             builder.Services.AddFluentValidators();
@@ -43,13 +50,19 @@ namespace ASP.NET.MVC
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            using (var scope = app.Services.CreateScope())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                Seeder.SeedRoles(scope.ServiceProvider).Wait();
+                Seeder.SeedAdmin(scope.ServiceProvider).Wait();
             }
+
+                // Configure the HTTP request pipeline.
+                if (!app.Environment.IsDevelopment())
+                {
+                    app.UseExceptionHandler("/Home/Error");
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    app.UseHsts();
+                }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

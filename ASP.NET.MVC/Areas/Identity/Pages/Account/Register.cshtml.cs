@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using ASP.NET.MVC.Helpers;
 using DataAccess.Data.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -84,7 +85,7 @@ namespace ASP.NET.MVC.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]
             [Display(Name = "Birthdate")]
             public DateTime Birthdate { get; set; }
-            
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -103,6 +104,9 @@ namespace ASP.NET.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Admin User")]
+            public bool AdminUser { get; set; }
         }
 
 
@@ -129,6 +133,12 @@ namespace ASP.NET.MVC.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    if (User.IsInRole("Admin") && Input.AdminUser)                    
+                        await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());                    
+                    else
+                        await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

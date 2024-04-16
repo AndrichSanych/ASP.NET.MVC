@@ -1,14 +1,17 @@
-﻿using AutoMapper;
+﻿using ASP.NET.MVC.Helpers;
+using AutoMapper;
 using BusinessLogic.DTOs;
 using BusinessLogic.Interfaces;
 using DataAccess.Data;
 using DataAccess.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP.NET.MVC.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class ProductsController : Controller
     {
         //private readonly ShopDbContext context;
@@ -28,6 +31,7 @@ namespace ASP.NET.MVC.Controllers
             var categories = productService.GetAllCategories();
             ViewBag.Categories = new SelectList(categories, nameof(Category.Id), nameof(Category.Name));
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(productService.GetAll());
@@ -40,7 +44,7 @@ namespace ASP.NET.MVC.Controllers
         }
 
         [HttpPost] 
-        public IActionResult Create(ProductDto model)
+        public IActionResult Create(CreateProductModel model)
         {
             if(!ModelState.IsValid) 
             {
@@ -74,6 +78,7 @@ namespace ASP.NET.MVC.Controllers
             productService.Edit(model);
             return RedirectToAction(nameof(Index));
         }
+        [AllowAnonymous]
         public IActionResult Details(int id, string? returnUrl)
         {
             var product = productService.Get(id);
